@@ -29,13 +29,31 @@ var Inbox = React.createClass({displayName: "Inbox",
 });
 
 var List = React.createClass({displayName: "List",
+  getInitialState: function() {
+    var records = [];
+    var i = 1;
+    for (;i<=500;i++) {
+      records.push({id: i});
+    }
+    return {
+      records: records
+    };
+  },
+  _records: function() {
+    var results = this.state.records.map(function(record){
+      return (
+        React.createElement("div", {className: "link", key: record.id}, 
+          React.createElement(Link, {to: "record", params: record}, "Record ", record.id)
+        )
+      );
+    });
+    return results;
+  },
   render: function() {
     return (
       React.createElement("div", {id: "list"}, 
         React.createElement("h2", null, "List"), 
-        React.createElement(Link, {to: "record", params: {id: 1}}, "Record 1"), React.createElement("br", null), 
-        React.createElement(Link, {to: "record", params: {id: 2}}, "Record 2"), React.createElement("br", null), 
-        React.createElement(Link, {to: "record"}, "Record anonymous"), React.createElement("br", null), 
+        this._records(), 
         React.createElement(Link, {to: "app"}, "Inbox")
       )
     );

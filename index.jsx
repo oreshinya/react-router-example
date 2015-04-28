@@ -28,12 +28,31 @@ var Inbox = React.createClass({
 });
 
 var List = React.createClass({
+  getInitialState: function() {
+    var records = [];
+    var i = 1;
+    for (;i<=500;i++) {
+      records.push({id: i});
+    }
+    return {
+      records: records
+    };
+  },
+  _records: function() {
+    var results = this.state.records.map(function(record){
+      return (
+        <div className="link" key={record.id}>
+          <Link to="record" params={record}>Record {record.id}</Link>
+        </div>
+      );
+    });
+    return results;
+  },
   render: function() {
     return (
       <div id="list">
         <h2>List</h2>
-        <Link to="record" params={{id: 1}}>Record 1</Link><br />
-        <Link to="record" params={{id: 2}}>Record 2</Link><br />
+        {this._records()}
         <Link to="app">Inbox</Link>
       </div>
     );
