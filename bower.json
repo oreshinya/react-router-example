@@ -1,0 +1,19 @@
+{
+  "name": "react-router-example",
+  "version": "0.0.0",
+  "authors": [
+    "shinya takahashi <s.takahashi313@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.13.2",
+    "react-router": "~0.13.2"
+  }
+}
