@@ -4,6 +4,7 @@ var RouteHandler = ReactRouter.RouteHandler;
 var DefaultRoute = ReactRouter.DefaultRoute;
 var NotFoundRoute = ReactRouter.NotFoundRoute;
 var Link = ReactRouter.Link;
+var SimpleTabs = ReactSimpleTabs;
 
 // components
 var App = React.createClass({displayName: "App",
@@ -22,7 +23,9 @@ var Inbox = React.createClass({displayName: "Inbox",
     return (
       React.createElement("div", {id: "mypage"}, 
         React.createElement("h2", null, "Inbox"), 
-        React.createElement(Link, {to: "records"}, "List")
+        React.createElement(Link, {to: "records"}, "List"), 
+        React.createElement(Link, {to: "simple-tabs"}, "SimpleTabs"), 
+        React.createElement(Link, {to: "tab-panels"}, "TabPanel")
       )
     );
   }
@@ -73,6 +76,59 @@ var Record = React.createClass({displayName: "Record",
     );
   }
 });
+
+var SimpleTabUI = React.createClass({displayName: "SimpleTabUI",
+  render: function() {
+    return (
+      React.createElement(SimpleTabs, null, 
+        React.createElement(SimpleTabs.Panel, {title: "Tab #1"}, 
+          React.createElement(Hoge, null)
+        ), 
+        React.createElement(SimpleTabs.Panel, {title: "Tab #2"}, 
+          React.createElement("h2", null, "Content #2 here")
+        ), 
+        React.createElement(SimpleTabs.Panel, {title: "Tab #3"}, 
+          React.createElement("h2", null, "Content #3 here")
+        )
+      )
+    );
+  }
+});
+
+var TabPanel = React.createClass({displayName: "TabPanel",
+  render: function() {
+    return (
+      React.createElement(ReactPanels.Panel, {theme: "chemical"}, 
+        React.createElement(ReactPanels.Tab, {title: "Tab 1"}, 
+          React.createElement(Hoge, null)
+        ), 
+        React.createElement(ReactPanels.Tab, {title: "Tab 2"}, 
+          React.createElement("h2", null, "Content #2 here")
+        )
+      )
+    );
+  }
+});
+
+var Hoge = React.createClass({displayName: "Hoge",
+  getInitialState: function() {
+    return {
+      clicked: false
+    };
+  },
+  _onClick: function() {
+    this.setState({clicked: !this.state.clicked});
+  },
+  render: function() {
+    return (
+      React.createElement("div", {id: "hoge"}, 
+        React.createElement("h2", null, "Hoge"), 
+        React.createElement("div", {onClick: this._onClick}, "clicked: ", this.state.clicked ? "true" : "false")
+      )
+    );
+  }
+});
+
 // components end
 
 // routing
@@ -81,6 +137,8 @@ var routes = (
     React.createElement(DefaultRoute, {handler: Inbox}), 
     React.createElement(Route, {name: "records", handler: List}), 
     React.createElement(Route, {name: "record", path: "/records/:id", handler: Record}), 
+    React.createElement(Route, {name: "simple-tabs", handler: SimpleTabUI}), 
+    React.createElement(Route, {name: "tab-panels", handler: TabPanel}), 
     React.createElement(NotFoundRoute, {handler: Inbox})
   )
 );

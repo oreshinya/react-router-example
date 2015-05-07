@@ -3,6 +3,7 @@ var RouteHandler = ReactRouter.RouteHandler;
 var DefaultRoute = ReactRouter.DefaultRoute;
 var NotFoundRoute = ReactRouter.NotFoundRoute;
 var Link = ReactRouter.Link;
+var SimpleTabs = ReactSimpleTabs;
 
 // components
 var App = React.createClass({
@@ -22,6 +23,8 @@ var Inbox = React.createClass({
       <div id="mypage">
         <h2>Inbox</h2>
         <Link to="records">List</Link>
+        <Link to="simple-tabs">SimpleTabs</Link>
+        <Link to="tab-panels">TabPanel</Link>
       </div>
     );
   }
@@ -72,6 +75,59 @@ var Record = React.createClass({
     );
   }
 });
+
+var SimpleTabUI = React.createClass({
+  render: function() {
+    return (
+      <SimpleTabs>
+        <SimpleTabs.Panel title='Tab #1'>
+          <Hoge />
+        </SimpleTabs.Panel>
+        <SimpleTabs.Panel title='Tab #2'>
+          <h2>Content #2 here</h2>
+        </SimpleTabs.Panel>
+        <SimpleTabs.Panel title='Tab #3'>
+          <h2>Content #3 here</h2>
+        </SimpleTabs.Panel>
+      </SimpleTabs>
+    );
+  }
+});
+
+var TabPanel = React.createClass({
+  render: function() {
+    return (
+      <ReactPanels.Panel theme="chemical">
+        <ReactPanels.Tab title="Tab 1">
+          <Hoge />
+        </ReactPanels.Tab>
+        <ReactPanels.Tab title="Tab 2">
+          <h2>Content #2 here</h2>
+        </ReactPanels.Tab>
+      </ReactPanels.Panel>
+    );
+  }
+});
+
+var Hoge = React.createClass({
+  getInitialState: function() {
+    return {
+      clicked: false
+    };
+  },
+  _onClick: function() {
+    this.setState({clicked: !this.state.clicked});
+  },
+  render: function() {
+    return (
+      <div id="hoge">
+        <h2>Hoge</h2>
+        <div onClick={this._onClick}>clicked: {this.state.clicked ? "true" : "false"}</div>
+      </div>
+    );
+  }
+});
+
 // components end
 
 // routing
@@ -80,6 +136,8 @@ var routes = (
     <DefaultRoute handler={Inbox} />
     <Route name="records" handler={List} />
     <Route name="record" path="/records/:id" handler={Record} />
+    <Route name="simple-tabs" handler={SimpleTabUI} />
+    <Route name="tab-panels" handler={TabPanel} />
     <NotFoundRoute handler={Inbox} />
   </Route>
 );
